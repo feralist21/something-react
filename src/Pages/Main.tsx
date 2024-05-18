@@ -1,17 +1,44 @@
 import Button from '@/Components/Button';
-import Checkbox from '@/Components/Checkbox';
+import TodoItem from '@/Components/TodoItem';
 
 const MainPage = () => {
+    interface TodoListProps {
+        title: string;
+        deadline: string;
+        id: number;
+    }
+
+    const mockTodoList: Array<TodoListProps> = [
+        {
+            title: 'Get products in store',
+            deadline: 'now',
+            id: 0,
+        },
+        {
+            title: 'Eating...',
+            deadline: 'tomorow',
+            id: 1,
+        },
+    ];
+
     return (
-        <div className='p-8 bg-gray-300 flex flex-col gap-y-2 rounded-lg w-[700px] mx-auto'>
-            <div className='p-4 bg-white rounded-lg flex gap-x-3 items-center'>
-                <Checkbox />
-                <div className='flex flex-col gap-y-1 flex-grow'>
-                    <h2 className='text-lg font-medium'>Title Todo</h2>
-                    <p className='text-sm'>Deadline: date</p>
-                </div>
-                <Button view='primary'>Edit</Button>
-                <Button view='secondary'>Delete</Button>
+        <div className='w-[700px] mx-auto flex flex-col gap-y-2'>
+            <div className='flex items-center justify-between'>
+                <Button view='primary'>Add Task</Button>
+                <div>this a select</div>
+            </div>
+            <div className='p-6 bg-gray-300 flex flex-col gap-y-4 rounded-lg'>
+                {mockTodoList.length > 0 ? (
+                    mockTodoList.map((todoItem) => (
+                        <TodoItem
+                            title={todoItem.title}
+                            deadline={todoItem.deadline}
+                            key={todoItem.id}
+                        />
+                    ))
+                ) : (
+                    <div>Oups... Noting</div>
+                )}
             </div>
         </div>
     );
