@@ -1,9 +1,9 @@
-import React from 'react';
+import { FC } from 'react';
 import Header from '@/Components/Header';
 import Container from '@/Components/Container';
 import { Outlet } from 'react-router-dom';
 
-const Layout: React.FC = () => {
+const Layout: FC = () => {
     return (
         <>
             <div className='w-full h-screen flex flex-col'>
