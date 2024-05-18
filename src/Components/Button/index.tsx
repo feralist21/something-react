@@ -23,7 +23,7 @@ export default function Button<E extends ElementType = typeof defaultElement>({
 }: ButtonProps<E>) {
     const classes = clsx(
         className,
-        'block p-2 text-sm',
+        'block p-2 text-sm rounded-sm',
         view === 'primary' ? 'bg-blue-300 text-white' : '',
         view === 'secondary' ? 'bg-red-400 text-white' : '',
     );
