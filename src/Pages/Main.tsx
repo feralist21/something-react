@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Button from '@/Components/Button';
 import TodoItem from '@/Components/TodoItem';
 import ModalCustom from '@/Components/Modal';
+import Input from '@/Components/Input';
 
 const MainPage = () => {
     interface TodoListProps {
@@ -50,7 +51,7 @@ const MainPage = () => {
                 )}
             </div>
             <ModalCustom open={open} onCloseModal={onCloseModal} title='Add Todo'>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil fugiat, quam laborum itaque temporibus, perferendis fuga suscipit aspernatur maiores minima, quasi libero nobis totam fugit repellendus dignissimos ab dolores dolor?</p>
+                <Input type='text'/>
             </ModalCustom>
         </div>
     );
