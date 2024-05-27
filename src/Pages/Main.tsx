@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Button from '@/Components/Button';
 import TodoItem from '@/Components/TodoItem';
 import ModalCustom from '@/Components/Modal';
 import Input from '@/Components/Input';
+import Select from '@/Components/Select';
 
 const MainPage = () => {
     interface TodoListProps {
@@ -29,13 +30,35 @@ const MainPage = () => {
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
 
+    interface SelectItemProps {
+        label: string;
+        id: number;
+    }
+
+    const items: SelectItemProps[] = [
+        { label: 'Первый', id: 0 },
+        { label: 'Второй', id: 1 },
+    ];
+
+    const [selectedItem, setSelectedItem] = useState<SelectItemProps | null>(null);
+
+    const handleSelectChange = useCallback((item: SelectItemProps) => {
+        setSelectedItem(item);
+    }, []);
+
     return (
         <div className='w-[700px] mx-auto flex flex-col gap-y-2'>
             <div className='flex items-center justify-between'>
                 <Button view='primary' onClick={onOpenModal}>
                     Add Task
                 </Button>
-                <div>this a select</div>
+                <Select
+                    className='w-[200px]'
+                    placeholder='Выберите опцию'
+                    items={items}
+                    value={selectedItem}
+                    onChange={handleSelectChange}
+                />
             </div>
             <div className='p-6 bg-gray-300 flex flex-col gap-y-4 rounded-lg'>
                 {mockTodoList.length > 0 ? (
@@ -51,7 +74,7 @@ const MainPage = () => {
                 )}
             </div>
             <ModalCustom open={open} onCloseModal={onCloseModal} title='Add Todo'>
-                <Input type='text'/>
+                <Input type='text' />
             </ModalCustom>
         </div>
     );
