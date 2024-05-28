@@ -1,9 +1,10 @@
 import clsx from 'clsx';
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
 
 type SelectItem = {
     label: string;
     id: number;
+    value: string;
 };
 
 interface SelectProps {
@@ -17,6 +18,7 @@ interface SelectProps {
 const Select: FC<SelectProps> = ({ className, placeholder, items, onChange, value }) => {
     const [selectedOption, setSelectedOption] = useState<SelectItem | null>(value || null);
     const [isOpen, setIsOpen] = useState(false);
+    const selectRef = useRef<HTMLDivElement>(null); // TODO: наверно здесь нужно сделать forwardRef;
 
     useEffect(() => {
         setSelectedOption(value || null);
@@ -34,8 +36,22 @@ const Select: FC<SelectProps> = ({ className, placeholder, items, onChange, valu
         }
     };
 
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [selectRef]);
+
     return (
-        <div className={clsx('relative', className)}>
+        <div className={clsx('relative', className)} ref={selectRef}>
             <button
                 className='w-full flex items-center justify-between gap-x-3 py-2 px-2 text-sm rounded-sm bg-white border-2 border-blue-300 text-black min-h-9'
                 type='button'
@@ -51,9 +67,9 @@ const Select: FC<SelectProps> = ({ className, placeholder, items, onChange, valu
                     <path
                         d='M12 4v16m0 0 6-6m-6 6-6-6'
                         stroke='#000000'
-                        stroke-width='1.5'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
+                        strokeWidth='1.5'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
                     />
                 </svg>
             </button>

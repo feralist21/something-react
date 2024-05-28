@@ -33,11 +33,12 @@ const MainPage = () => {
     interface SelectItemProps {
         label: string;
         id: number;
+        value: string;
     }
 
     const items: SelectItemProps[] = [
-        { label: 'Первый', id: 0 },
-        { label: 'Второй', id: 1 },
+        { label: 'Выполнено', id: 0, value: 'finished' },
+        { label: 'Невыполнено', id: 1, value: 'unfinished' },
     ];
 
     const [selectedItem, setSelectedItem] = useState<SelectItemProps | null>(null);
